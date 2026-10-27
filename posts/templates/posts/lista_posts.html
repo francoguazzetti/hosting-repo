@@ -1,0 +1,22 @@
+{% extends "posts/base.html" %}
+{% block titulo %}Posts{% endblock %}
+{% block contenido %}
+<h1>Posts</h1>
+
+<form method="get">
+  {{ form.as_p }}
+  <button type="submit">Buscar</button>
+  <a href="{% url 'lista_posts' %}">Limpiar</a>
+</form>
+
+<ul>
+  {% for post in posts %}
+    <li>
+      <a href="{% url 'detalle_post' post.slug %}">{{ post.titulo }}</a>
+      <span class="meta">por {{ post.autor.username }} · {{ post.likes }} likes · {{ post.get_estado_display }}</span>
+    </li>
+  {% empty %}
+    <li>No hay posts para mostrar.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

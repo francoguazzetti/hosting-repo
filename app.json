@@ -1,0 +1,10 @@
+{
+  "name": "blog-django-permisos",
+  "description": "Blog con Django: formas de proteger vistas (login, permisos, guardian).",
+  "env": {
+    "DEBUG": { "value": "0" },
+    "SECRET_KEY": { "generator": "secret" }
+  },
+  "addons": ["heroku-postgresql"],
+  "buildpacks": [{ "url": "heroku/python" }]
+}

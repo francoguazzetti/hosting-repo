@@ -1,0 +1,19 @@
+{% extends "posts/base.html" %}
+{% block titulo %}{{ post.titulo }}{% endblock %}
+{% block contenido %}
+<h1>{{ post.titulo }}</h1>
+<p class="meta">Por <a href="{% url 'perfil_publico' post.autor.username %}">{{ post.autor.username }}</a> · {{ post.fecha_creacion|date:"d/m/Y H:i" }} · {{ post.likes }} likes · {{ post.get_estado_display }}</p>
+<div>{{ post.contenido|linebreaks }}</div>
+
+<p class="acciones">
+  {% if puede_modificar %}
+    <a href="{% url 'editar_post' post.slug %}">Editar</a>
+    <a href="{% url 'eliminar_post' post.slug %}">Eliminar</a>
+    <span class="meta">(vistas con clase:
+      <a href="{% url 'cbv_editar_post' post.slug %}">editar</a>,
+      <a href="{% url 'cbv_eliminar_post' post.slug %}">eliminar</a>)</span>
+  {% endif %}
+  {% if es_autor %}<a href="{% url 'compartir_post' post.slug %}">Compartir</a>{% endif %}
+  <a href="{% url 'lista_posts' %}">Volver a la lista</a>
+</p>
+{% endblock %}

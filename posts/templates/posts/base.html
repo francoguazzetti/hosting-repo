@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>{% block titulo %}Blog{% endblock %}</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+    nav a { margin-right: 1rem; }
+    .errorlist { color: #b00020; margin: 0.25rem 0; padding-left: 1rem; }
+    form p { margin: 0.75rem 0; }
+    input[type=text], input[type=email], input[type=number], textarea, select { width: 100%; padding: 0.4rem; box-sizing: border-box; }
+    .acciones a, .acciones button { margin-right: 0.75rem; }
+    .sesion { float: right; }
+    form.inline { display: inline; }
+    .mensajes { list-style: none; padding: 0.5rem 1rem; background: #e8f5e9; border-radius: 4px; }
+    .mensajes:empty { display: none; }
+    .meta { color: #666; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="{% url 'lista_posts' %}">Posts</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'crear_post' %}">Nuevo post</a>
+      <a href="{% url 'mis_posts' %}">Mis posts</a>
+      <a href="{% url 'cbv_crear_post' %}">Nuevo (clase)</a>
+    {% endif %}
+    {% if perms.posts.change_post %}
+      <a href="{% url 'borradores' %}">Borradores</a>
+    {% endif %}
+    <a href="{% url 'estadisticas' %}">Estadísticas</a>
+    <a href="{% url 'contacto' %}">Contacto</a>
+    <span class="sesion">
+      {% if user.is_authenticated %}
+        Hola, <a href="{% url 'perfil_publico' user.username %}">{{ user.username }}</a>
+        <a href="{% url 'editar_perfil' %}">Mi perfil</a>
+        {# logout es POST: cerrar sesión cambia el estado, no puede ser un simple link #}
+        <form method="post" action="{% url 'logout' %}" class="inline">
+          {% csrf_token %}<button type="submit">Salir</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}">Ingresar</a>
+        <a href="{% url 'registro' %}">Registrarse</a>
+      {% endif %}
+    </span>
+  </nav>
+  <hr>
+  {% if messages %}
+    <ul class="mensajes">{% for m in messages %}<li class="{{ m.tags }}">{{ m }}</li>{% endfor %}</ul>
+  {% endif %}
+  {% block contenido %}{% endblock %}
+</body>
+</html>

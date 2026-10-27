@@ -1,0 +1,16 @@
+{% extends "posts/base.html" %}
+{% block titulo %}{{ usuario.username }}{% endblock %}
+{% block contenido %}
+<h1>{{ usuario.get_full_name|default:usuario.username }}</h1>
+<p class="meta">@{{ usuario.username }}{% if usuario.perfil.sitio_web %} · <a href="{{ usuario.perfil.sitio_web }}">{{ usuario.perfil.sitio_web }}</a>{% endif %}</p>
+{% if usuario.perfil.bio %}<p>{{ usuario.perfil.bio|linebreaksbr }}</p>{% endif %}
+{% if user == usuario %}<p><a href="{% url 'editar_perfil' %}">Editar mi perfil</a> · <a href="{% url 'password_change' %}">Cambiar contraseña</a></p>{% endif %}
+<h2>Posts publicados</h2>
+<ul>
+  {% for post in posts %}
+    <li><a href="{% url 'detalle_post' post.slug %}">{{ post.titulo }}</a></li>
+  {% empty %}
+    <li>Sin posts publicados.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
