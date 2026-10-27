@@ -13,7 +13,7 @@ if path not in sys.path:
     sys.path.insert(0, path)
 
 os.environ['DEBUG'] = '0'
-os.environ['SECRET_KEY'] = '0^q*n-&jjslxh(iu64y705spyj$01&@g#oowdxuseu--by+1u1'
+os.environ['SECRET_KEY'] = 
 os.environ['ALLOWED_HOSTS'] = 'francoguazzetti.pythonanywhere.com'
 os.environ['CSRF_TRUSTED_ORIGINS'] = 'https://francoguazzetti.pythonanywhere.com'
 os.environ['DATABASE_URL'] = 'sqlite:////home/francoguazzetti/hosting-repo/db.sqlite3'
