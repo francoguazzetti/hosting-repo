@@ -108,8 +108,7 @@ DATABASES = {
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600,
         conn_health_checks=True,
-        # Heroku Postgres exige SSL; SQLite no acepta la opción sslmode.
-        ssl_require=not DEBUG and not os.environ.get("DATABASE_URL", "").startswith("sqlite"),
+        ssl_require=not DEBUG,  # Heroku Postgres exige SSL
     )
 }
 
